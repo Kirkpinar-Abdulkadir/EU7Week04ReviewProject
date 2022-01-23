@@ -60,5 +60,19 @@ public class DropdownTest {
 
         Assert.assertEquals(actualSelectedOption,expectedSelectedOption, "MyMoney is Not selected");
 
+        //Then select FamilyAlbum, make quantity 2, and click Calculate
+        productDropdown.selectByVisibleText("FamilyAlbum");
+        WebElement quantity = driver.findElement(By.id("ctl00_MainContent_fmwOrder_txtQuantity"));
+        quantity.sendKeys("2");
+        WebElement calcButton = driver.findElement(By.xpath("//input[@type='submit']"));
+        calcButton.click();
+
+        //verify total amount
+        int expectedAmount = 160;
+        WebElement totalPriceElement = driver.findElement(By.xpath("//input[@type='submit']/preceding-sibling::input"));
+
+        int actualAmount = Integer.parseInt(totalPriceElement.getAttribute("value"));
+        Assert.assertEquals(actualAmount,expectedAmount);
+
     }
 }
